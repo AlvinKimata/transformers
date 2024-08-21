@@ -66,12 +66,11 @@ python run_clm.py \
 
 ### Llama 8B and causal language modeling
 
-The following example fine-tunes Llama3-8B on WikiText-2 on TPU v3-8. We're using the raw WikiText-2 (no tokens were replaced before
+The following example fine-tunes Llama3-8B using LoRA on WikiText-2 on TPU v3-8. We're using the raw WikiText-2 (no tokens were replaced before
 the tokenization). The loss here is that of causal language modeling. It uses SMPD and FSDP.
 
 ```bash
-# Run
-!python run_clm.py \
+python run_clm.py \
   --tokenizer_name hf-internal-testing/llama-tokenizer \
   --dataset_name wikitext \
   --dataset_config_name wikitext-2-raw-v1 \
