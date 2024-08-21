@@ -34,6 +34,7 @@ text files for training and validation. We give examples of both below.
 The following example fine-tunes GPT-2 on WikiText-2. We're using the raw WikiText-2 (no tokens were replaced before
 the tokenization). The loss here is that of causal language modeling.
 
+
 ```bash
 python run_clm.py \
     --model_name_or_path openai-community/gpt2 \
@@ -62,6 +63,38 @@ python run_clm.py \
     --do_eval \
     --output_dir /tmp/test-clm
 ```
+
+### Llama 8B and causal language modeling
+
+The following example fine-tunes Llama3-8B on WikiText-2 on TPU v3-8. We're using the raw WikiText-2 (no tokens were replaced before
+the tokenization). The loss here is that of causal language modeling. It uses SMPD and FSDP.
+
+```bash
+# Run
+!python run_clm.py \
+  --tokenizer_name hf-internal-testing/llama-tokenizer \
+  --dataset_name wikitext \
+  --dataset_config_name wikitext-2-raw-v1 \
+  --per_device_train_batch_size 8 \
+  --per_device_eval_batch_size 8 \
+  --num_train_epochs 2 \
+  --do_train \
+  --output_dir /tmp/output \
+  --overwrite_output_dir \
+  --model_name_or_path "meta-llama/Meta-Llama-3-8B"\
+  --save_strategy no \
+  --logging_strategy no \
+  --remove_unused_columns no \
+  --optim adafactor \
+  --torch_dtype bfloat16 \
+  --dataloader_drop_last yes \
+  --block_size 256 \
+  --spmd_2d_sharding 0 \
+  --spmd_grad_chkpt True \
+  --spmd_fsdp_sharding True \
+  --peft_lora True
+```
+
 
 This uses the built in HuggingFace `Trainer` for training. If you want to use a custom training loop, you can utilize or adapt the `run_clm_no_trainer.py` script. Take a look at the script for a list of supported arguments. An example is shown below:
 
