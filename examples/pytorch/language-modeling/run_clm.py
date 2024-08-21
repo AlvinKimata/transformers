@@ -534,9 +534,9 @@ def main():
     assert xr.device_type() == 'TPU' or xr.device_type() == 'CUDA', f"Supported hardware are TPU and CUDA. Detected hardware: {xr.device_type()}"
     if xr.device_type() == 'TPU':
         data_axis = num_devices // model_axis  # Calculate the data axis size
-        mesh_shape = (data_axis, model_axis)  # Use a simpler 2D mesh
+        mesh_shape = (1, data_axis, model_axis)  # Use a simpler 2D mesh
         device_ids = np.arange(num_devices)
-        spmd_mesh = xs.Mesh(device_ids, mesh_shape, axis_names=('data', 'model'))
+        spmd_mesh = xs.Mesh(device_ids, mesh_shape, ('dcn', 'data', 'model'))
         xs.set_global_mesh(spmd_mesh)
 
     elif xr.device_type() == 'CUDA':
