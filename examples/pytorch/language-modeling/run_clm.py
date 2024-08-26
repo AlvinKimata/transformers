@@ -401,12 +401,12 @@ def main():
     if data_args.dataset_name is not None:
         # Downloading and loading a dataset from the hub.
         raw_datasets = load_dataset(
-            trust_remote_code=True,
             data_args.dataset_name,
             data_args.dataset_config_name,
             cache_dir=model_args.cache_dir,
             token=model_args.token,
             streaming=data_args.streaming,
+            trust_remote_code=True
         )
         if "validation" not in raw_datasets.keys():
             raw_datasets["validation"] = load_dataset(
