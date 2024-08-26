@@ -312,6 +312,7 @@ _import_structure = {
         "CTRLTokenizer",
     ],
     "models.cvt": ["CvtConfig"],
+    "models.dac": ["DacConfig", "DacFeatureExtractor"],
     "models.data2vec": [
         "Data2VecAudioConfig",
         "Data2VecTextConfig",
@@ -662,6 +663,10 @@ _import_structure = {
         "Qwen2AudioProcessor",
     ],
     "models.qwen2_moe": ["Qwen2MoeConfig"],
+    "models.qwen2_vl": [
+        "Qwen2VLConfig",
+        "Qwen2VLProcessor",
+    ],
     "models.rag": ["RagConfig", "RagRetriever", "RagTokenizer"],
     "models.recurrent_gemma": ["RecurrentGemmaConfig"],
     "models.reformer": ["ReformerConfig"],
@@ -930,6 +935,7 @@ _import_structure = {
         "is_tokenizers_available",
         "is_torch_available",
         "is_torch_mlu_available",
+        "is_torch_musa_available",
         "is_torch_neuroncore_available",
         "is_torch_npu_available",
         "is_torch_tpu_available",
@@ -948,6 +954,7 @@ _import_structure = {
         "GPTQConfig",
         "HqqConfig",
         "QuantoConfig",
+        "TorchAoConfig",
     ],
 }
 
@@ -1186,6 +1193,7 @@ else:
     _import_structure["models.pix2struct"].extend(["Pix2StructImageProcessor"])
     _import_structure["models.poolformer"].extend(["PoolFormerFeatureExtractor", "PoolFormerImageProcessor"])
     _import_structure["models.pvt"].extend(["PvtImageProcessor"])
+    _import_structure["models.qwen2_vl"].extend(["Qwen2VLImageProcessor"])
     _import_structure["models.rt_detr"].extend(["RTDetrImageProcessor"])
     _import_structure["models.sam"].extend(["SamImageProcessor"])
     _import_structure["models.segformer"].extend(["SegformerFeatureExtractor", "SegformerImageProcessor"])
@@ -1273,7 +1281,6 @@ else:
             "ExponentialDecayLengthPenalty",
             "ForcedBOSTokenLogitsProcessor",
             "ForcedEOSTokenLogitsProcessor",
-            "ForceTokensLogitsProcessor",
             "GenerationMixin",
             "HammingDiversityLogitsProcessor",
             "InfNanRemoveLogitsProcessor",
@@ -1753,6 +1760,12 @@ else:
             "CvtForImageClassification",
             "CvtModel",
             "CvtPreTrainedModel",
+        ]
+    )
+    _import_structure["models.dac"].extend(
+        [
+            "DacModel",
+            "DacPreTrainedModel",
         ]
     )
     _import_structure["models.data2vec"].extend(
@@ -3007,6 +3020,13 @@ else:
             "Qwen2MoeForTokenClassification",
             "Qwen2MoeModel",
             "Qwen2MoePreTrainedModel",
+        ]
+    )
+    _import_structure["models.qwen2_vl"].extend(
+        [
+            "Qwen2VLForConditionalGeneration",
+            "Qwen2VLModel",
+            "Qwen2VLPreTrainedModel",
         ]
     )
     _import_structure["models.rag"].extend(
@@ -4585,6 +4605,13 @@ else:
             "FlaxCLIPVisionPreTrainedModel",
         ]
     )
+    _import_structure["models.dinov2"].extend(
+        [
+            "FlaxDinov2Model",
+            "FlaxDinov2ForImageClassification",
+            "FlaxDinov2PreTrainedModel",
+        ]
+    )
     _import_structure["models.distilbert"].extend(
         [
             "FlaxDistilBertForMaskedLM",
@@ -5017,6 +5044,10 @@ if TYPE_CHECKING:
         CTRLTokenizer,
     )
     from .models.cvt import CvtConfig
+    from .models.dac import (
+        DacConfig,
+        DacFeatureExtractor,
+    )
     from .models.data2vec import (
         Data2VecAudioConfig,
         Data2VecTextConfig,
@@ -5405,6 +5436,10 @@ if TYPE_CHECKING:
         Qwen2AudioProcessor,
     )
     from .models.qwen2_moe import Qwen2MoeConfig
+    from .models.qwen2_vl import (
+        Qwen2VLConfig,
+        Qwen2VLProcessor,
+    )
     from .models.rag import RagConfig, RagRetriever, RagTokenizer
     from .models.recurrent_gemma import RecurrentGemmaConfig
     from .models.reformer import ReformerConfig
@@ -5706,6 +5741,7 @@ if TYPE_CHECKING:
         is_tokenizers_available,
         is_torch_available,
         is_torch_mlu_available,
+        is_torch_musa_available,
         is_torch_neuroncore_available,
         is_torch_npu_available,
         is_torch_tpu_available,
@@ -5726,6 +5762,7 @@ if TYPE_CHECKING:
         GPTQConfig,
         HqqConfig,
         QuantoConfig,
+        TorchAoConfig,
     )
 
     try:
@@ -5957,6 +5994,7 @@ if TYPE_CHECKING:
             PoolFormerImageProcessor,
         )
         from .models.pvt import PvtImageProcessor
+        from .models.qwen2_vl import Qwen2VLImageProcessor
         from .models.rt_detr import RTDetrImageProcessor
         from .models.sam import SamImageProcessor
         from .models.segformer import SegformerFeatureExtractor, SegformerImageProcessor
@@ -6037,7 +6075,6 @@ if TYPE_CHECKING:
             ExponentialDecayLengthPenalty,
             ForcedBOSTokenLogitsProcessor,
             ForcedEOSTokenLogitsProcessor,
-            ForceTokensLogitsProcessor,
             GenerationMixin,
             HammingDiversityLogitsProcessor,
             InfNanRemoveLogitsProcessor,
@@ -6438,6 +6475,10 @@ if TYPE_CHECKING:
             CvtForImageClassification,
             CvtModel,
             CvtPreTrainedModel,
+        )
+        from .models.dac import (
+            DacModel,
+            DacPreTrainedModel,
         )
         from .models.data2vec import (
             Data2VecAudioForAudioFrameClassification,
@@ -7432,6 +7473,11 @@ if TYPE_CHECKING:
             Qwen2MoeForTokenClassification,
             Qwen2MoeModel,
             Qwen2MoePreTrainedModel,
+        )
+        from .models.qwen2_vl import (
+            Qwen2VLForConditionalGeneration,
+            Qwen2VLModel,
+            Qwen2VLPreTrainedModel,
         )
         from .models.rag import (
             RagModel,
@@ -8701,6 +8747,11 @@ if TYPE_CHECKING:
             FlaxCLIPTextPreTrainedModel,
             FlaxCLIPVisionModel,
             FlaxCLIPVisionPreTrainedModel,
+        )
+        from .models.dinov2 import (
+            FlaxDinov2ForImageClassification,
+            FlaxDinov2Model,
+            FlaxDinov2PreTrainedModel,
         )
         from .models.distilbert import (
             FlaxDistilBertForMaskedLM,
