@@ -91,7 +91,8 @@ python run_clm.py \
   --spmd_2d_sharding 0 \
   --spmd_grad_chkpt True \
   --spmd_fsdp_sharding True \
-  --peft_lora True
+  --peft_lora True \
+  --trust_remote_code True
 ```
 
 
