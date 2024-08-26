@@ -680,7 +680,7 @@ def main():
         print("Using DoRA")
         from peft import LoraConfig, TaskType, get_peft_model
         # We don't set dropout here because dropout requires special xla flags to be memory efficient.
-        peft_config = LoraConfig(use_dora = True, task_type=TaskType.CAUSAL_LM, inference_mode=False, r=16, lora_alpha=64, lora_dropout=0.2, 
+        peft_config = LoraConfig(use_dora = True, task_type=TaskType.CAUSAL_LM, inference_mode=False, r=8, lora_alpha=32, lora_dropout=0.2, 
               target_modules=(["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]), bias="none")
         # peft_config = LoraConfig(task_type=TaskType.CAUSAL_LM, inference_mode=False, r=8, lora_alpha=32, lora_dropout=0.2)
         model = get_peft_model(model, peft_config)
